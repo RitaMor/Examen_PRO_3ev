@@ -13,6 +13,7 @@ public class Main {
 		//ad.insertaCientificosDesdeFichero("ficheros/cientificos.txt");
 		//ad.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
 		//ad.insertaProyectosDesdeFichero("ficheros/proyectos.txt");
+		ad.creaListaBDGenerica("laboratorio", "proyectos");
 	}
 
 }

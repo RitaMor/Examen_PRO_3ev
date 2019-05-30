@@ -28,20 +28,21 @@ public class AccesoDatos {
 			ResultSetMetaData mD = rS.getMetaData();
 			
 			System.out.println();
-			System.out.println("ArrayList generico");
+			System.out.println("ArrayList genérico");
 			
 			ArrayList<String> listado = new ArrayList<>();
-			for (int i = 1; i < mD.getColumnCount(); i++) {
+			for (int i = 0; i < mD.getColumnCount(); i++) {
 				System.out.printf("%-27s",i + " -> " + mD.getColumnName(i+1));
 			}
 			System.out.println();
 			while (rS.next()) {
-				for (int i = 1; i <mD.getColumnCount(); i++) {
+				
+				for (int i = 1; i <mD.getColumnCount()+1; i++) {
 					
 					listado.add(rS.getString(i));
 					
 					
-					System.out.printf("%-27s", rS.getString(i+1));
+					System.out.printf("%-27s", rS.getString(i));
 					
 				}System.out.println();
 				
@@ -207,5 +208,7 @@ public class AccesoDatos {
 		}
 
 	}
+	
+	
 
 }
