@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import control.BaseDatos;
+import modelo.Proyecto;
 
 public class AccesoDatos {
 	
@@ -61,6 +62,44 @@ public class AccesoDatos {
 		return null;
 
 	}
+	
+	
+	public ArrayList<Proyecto> creaListaProyectoBD(String bdatos, String tabla) {
+		// Mostrar por consola TODOS LOS EQUIPOS...
+		// CONECTAR A LA BBDD.
+
+		try {
+			BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+			Connection conexion = bd.getConexion();
+			Statement stmt = conexion.createStatement();
+			ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+			ResultSetMetaData mD = rS.getMetaData();
+			
+			ArrayList<Proyecto> listaEquipos = new ArrayList<>();
+			Proyecto equipo;
+			while (rS.next()) {
+				int id = Integer.parseInt(rS.getString(1));
+				String nombre = rS.getString("nombre");
+				int horas = Integer.parseInt(rS.getString(3));
+				
+				equipo = new Proyecto(id, nombre, horas);
+				listaEquipos.add(equipo);
+				System.out.println(equipo);
+			}
+
+			rS.close();
+			stmt.close();
+			conexion.close();
+			return listaEquipos;
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+		}
+		return null;
+
+	}
+
 	
 	// CIENTIFICOS
 	public void insertaCientificosDesdeFichero(String ruta) {
@@ -192,10 +231,10 @@ public class AccesoDatos {
 																				// executeUpdate
 			ResultSetMetaData mD = rS.getMetaData();
 			mD.getColumnCount(); // Número de columnas
-			System.out.println(mD.getColumnName(1)+" "+mD.getColumnName(2)); // nombre de la columna
+			System.out.println(mD.getColumnName(1)+"\t\t"+mD.getColumnName(2)); // nombre de la columna
 
 			while (rS.next()) {
-				System.out.println(rS.getString(1) + "\t\t" + rS.getString("last_name"));
+				System.out.println(rS.getString(1) + "\t\t" + rS.getString(2));
 
 			}
 			rS.close();
