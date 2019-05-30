@@ -11,7 +11,7 @@ public class Main {
 		AccesoDatos ad = new AccesoDatos();
 		ad.recorreTabla();
 		//ad.insertaCientificosDesdeFichero("ficheros/cientificos.txt");
-		ad.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
+		//ad.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
 		//ad.insertaProyectosDesdeFichero("ficheros/proyectos.txt");
 	}
 
