@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import control.BaseDatos;
+import modelo.Asignacion;
+import modelo.Cientifico;
 import modelo.Proyecto;
 
 public class AccesoDatos {
@@ -218,6 +220,46 @@ public class AccesoDatos {
 		}
 	
 		// Ejercicio 7 Array de objeto
+		
+		public ArrayList<Cientifico> creaListaCientificosBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
+
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				ArrayList<Cientifico> listaCientifico = new ArrayList<>();
+				Cientifico cientifico;
+				System.out.println(":: LISTA CIENTIFICO ::");
+				while (rS.next()) {
+					
+					String dni = rS.getString("dni");
+					String nombre = rS.getString("nombre");
+					
+					cientifico = new Cientifico(dni, nombre);
+					listaCientifico.add(cientifico);
+					System.out.println(cientifico);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaCientifico;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
+		
+		
+		
 		public ArrayList<Proyecto> creaListaProyectoBD(String bdatos, String tabla) {
 			// Mostrar por consola TODOS LOS EQUIPOS...
 			// CONECTAR A LA BBDD.
@@ -229,23 +271,23 @@ public class AccesoDatos {
 				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
 				ResultSetMetaData mD = rS.getMetaData();
 				
-				ArrayList<Proyecto> listaEquipos = new ArrayList<>();
+				ArrayList<Proyecto> listaProyecto = new ArrayList<>();
 				Proyecto proyecto;
-				System.out.println(":: LISTA ::");
+				System.out.println(":: LISTA PROYECTO::");
 				while (rS.next()) {
 					int id = Integer.parseInt(rS.getString(1));
 					String nombre = rS.getString("nombre");
 					int horas = Integer.parseInt(rS.getString(3));
 					
 					proyecto = new Proyecto(id, nombre, horas);
-					listaEquipos.add(proyecto);
+					listaProyecto.add(proyecto);
 					System.out.println(proyecto);
 				}
 
 				rS.close();
 				stmt.close();
 				conexion.close();
-				return listaEquipos;
+				return listaProyecto;
 
 			} catch (SQLException e) {
 
@@ -255,6 +297,83 @@ public class AccesoDatos {
 
 		}
 
+		public ArrayList<Asignacion> creaListaAsignacionesBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
+
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				ArrayList<Asignacion> listaAsignacion = new ArrayList<>();
+				Asignacion asignacion;
+				System.out.println(":: LISTA ASIGNACION ::");
+				while (rS.next()) {
+					
+					String cientifico = rS.getString("cientifico");
+					int proyecto = Integer.parseInt(rS.getString(2));
+					
+					asignacion = new Asignacion(cientifico, proyecto);
+					listaAsignacion.add(asignacion);
+					System.out.println(asignacion);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaAsignacion;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
+		
+	
+		public HashMap<String, Cientifico> creaMapaCientificoBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
+
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				HashMap<String, Cientifico> listaCientifico = new HashMap<String, Cientifico>();
+				Cientifico cientifico;
+				System.out.println(":: MAPA CIENTIFICO::");
+				while (rS.next()) {
+					
+					String dni = rS.getString("dni");
+					String nombre = rS.getString("nombre");
+					
+					
+					cientifico = new Cientifico(dni, nombre);
+					
+					listaCientifico.put(rS.getString(1), cientifico);
+					System.out.println(cientifico);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaCientifico;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
+		
 		public HashMap<String, Proyecto> creaMapaProyectoBD(String bdatos, String tabla) {
 			// Mostrar por consola TODOS LOS EQUIPOS...
 			// CONECTAR A LA BBDD.
@@ -266,24 +385,25 @@ public class AccesoDatos {
 				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
 				ResultSetMetaData mD = rS.getMetaData();
 				
-				HashMap<String, Proyecto> listaEquipos = new HashMap<String, Proyecto>();
+				HashMap<String, Proyecto> listaProyecto = new HashMap<String, Proyecto>();
 				Proyecto proyecto;
-				System.out.println(":: MAPA ::");
+				System.out.println(":: MAPA PROYECTO::");
 				while (rS.next()) {
+					
 					int id = Integer.parseInt(rS.getString(1));
 					String nombre = rS.getString("nombre");
 					int horas = Integer.parseInt(rS.getString(3));
 					
 					proyecto = new Proyecto(id, nombre, horas);
 					
-					listaEquipos.put(rS.getString(1), proyecto);
+					listaProyecto.put(rS.getString(1), proyecto);
 					System.out.println(proyecto);
 				}
 
 				rS.close();
 				stmt.close();
 				conexion.close();
-				return listaEquipos;
+				return listaProyecto;
 
 			} catch (SQLException e) {
 
@@ -292,5 +412,46 @@ public class AccesoDatos {
 			return null;
 
 		}
+		
+		public HashMap<String, Asignacion> creaMapaAsignacionBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
 
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				HashMap<String, Asignacion> mapaAsignacion= new HashMap<String, Asignacion>();
+				Asignacion asignacion;
+				System.out.println(":: MAPA ASIGNACION ::");
+				while (rS.next()) {
+					
+					
+					String cientifico = rS.getString("cientifico");
+					int proyecto = Integer.parseInt(rS.getString(2));
+					
+					asignacion = new Asignacion(cientifico, proyecto);
+					
+					mapaAsignacion.put(rS.getString("cientifico"), asignacion);
+					System.out.println(asignacion);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return mapaAsignacion;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
+		
+		
+		
 }

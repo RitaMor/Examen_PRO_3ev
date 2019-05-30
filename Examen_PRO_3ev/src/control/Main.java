@@ -17,8 +17,9 @@ public class Main {
 		
 		// Ejercicio 3 
 		//AccesoDatos.insertaCientificosDesdeFichero("ficheros/cientificos.txt");
-		//AccesoDatos.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
 		//AccesoDatos.insertaProyectosDesdeFichero("ficheros/proyectos.txt");
+		//AccesoDatos.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
+		
 		
 		// Ejercicio 4 y 5 Hecho en sus respectivas clases
 		
@@ -26,12 +27,15 @@ public class Main {
 		//ad.creaListaBDGenerica("laboratorio", "proyectos");
 		
 		// Ejercicio 7
+		ad.creaListaCientificosBD("laboratorio", "cientificos");
 		ad.creaListaProyectoBD("laboratorio", "proyectos");
+		ad.creaListaAsignacionesBD("laboratorio", "asignaciones");
+		
 		
 		// Ejercicio 8
+		ad.creaMapaCientificoBD("laboratorio", "cientificos");
 		ad.creaMapaProyectoBD("laboratorio", "proyectos");
-		
-		
+		ad.creaMapaAsignacionBD("laboratorio", "asignaciones");
 		System.out.println("FIN");
 		
 		
