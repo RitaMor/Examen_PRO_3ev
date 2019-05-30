@@ -10,99 +10,50 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import control.BaseDatos;
 import modelo.Proyecto;
 
 public class AccesoDatos {
 	
-	// ArrayList generico
-	public ArrayList<String> creaListaBDGenerica(String bdatos, String tabla) {
-		// Mostrar por consola TODOS LOS DATOS...
+	
+	
+	
+	
+	public void recorreTabla() {
+		// Mostrar por consola ...
 		// CONECTAR A LA BBDD.
 
 		try {
-			BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+			BaseDatos bd = new BaseDatos("localhost", "laboratorio", "root", "");
 			Connection conexion = bd.getConexion();
 			Statement stmt = conexion.createStatement();
-			ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+			ResultSet rS = stmt.executeQuery("SELECT * FROM Asignaciones "); // para escribir cambia execute query por
+																				// executeUpdate
 			ResultSetMetaData mD = rS.getMetaData();
-			
-			System.out.println();
-			System.out.println("ArrayList genérico");
-			
-			ArrayList<String> listado = new ArrayList<>();
-			for (int i = 0; i < mD.getColumnCount(); i++) {
-				System.out.printf("%-27s",i + " -> " + mD.getColumnName(i+1));
-			}
-			System.out.println();
-			while (rS.next()) {
-				
-				for (int i = 1; i <mD.getColumnCount()+1; i++) {
-					
-					listado.add(rS.getString(i));
-					
-					
-					System.out.printf("%-27s", rS.getString(i));
-					
-				}System.out.println();
-				
-		
-			}
+			mD.getColumnCount(); // Número de columnas
+			System.out.println(mD.getColumnName(1)+"\t\t"+mD.getColumnName(2)); // nombre de la columna
 
+			while (rS.next()) {
+				System.out.println(rS.getString(1) + "\t\t" + rS.getString(2));
+
+			}
 			rS.close();
 			stmt.close();
 			conexion.close();
-			return listado;
 
 		} catch (SQLException e) {
 
 			System.out.println(e.getMessage());
 		}
-		return null;
 
 	}
 	
-	
-	public ArrayList<Proyecto> creaListaProyectoBD(String bdatos, String tabla) {
-		// Mostrar por consola TODOS LOS EQUIPOS...
-		// CONECTAR A LA BBDD.
 
-		try {
-			BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
-			Connection conexion = bd.getConexion();
-			Statement stmt = conexion.createStatement();
-			ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
-			ResultSetMetaData mD = rS.getMetaData();
-			
-			ArrayList<Proyecto> listaEquipos = new ArrayList<>();
-			Proyecto equipo;
-			while (rS.next()) {
-				int id = Integer.parseInt(rS.getString(1));
-				String nombre = rS.getString("nombre");
-				int horas = Integer.parseInt(rS.getString(3));
-				
-				equipo = new Proyecto(id, nombre, horas);
-				listaEquipos.add(equipo);
-				System.out.println(equipo);
-			}
-
-			rS.close();
-			stmt.close();
-			conexion.close();
-			return listaEquipos;
-
-		} catch (SQLException e) {
-
-			System.out.println(e.getMessage());
-		}
-		return null;
-
-	}
-
-	
+	// Ejercicio 3 
 	// CIENTIFICOS
-	public void insertaCientificosDesdeFichero(String ruta) {
+	public static void insertaCientificosDesdeFichero(String ruta) {
 
 		try {
 
@@ -141,7 +92,7 @@ public class AccesoDatos {
 	}
 	
 	// PROYECTOS
-	public void insertaProyectosDesdeFichero(String ruta) {
+	public static void insertaProyectosDesdeFichero(String ruta) {
 
 		try {
 
@@ -180,7 +131,7 @@ public class AccesoDatos {
 	}
 	
 	// ASIGNACIONES
-	public void insertaAsignacionesDesdeFichero(String ruta) {
+	public static void insertaAsignacionesDesdeFichero(String ruta) {
 
 		try {
 
@@ -219,35 +170,127 @@ public class AccesoDatos {
 
 	}
 	
-	public void recorreTabla() {
-		// Mostrar por consola ...
-		// CONECTAR A LA BBDD.
+	// Ejercicio 6 - ArrayList de String generico
+		public ArrayList<String> creaListaBDGenerica(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS DATOS...
+			// CONECTAR A LA BBDD.
 
-		try {
-			BaseDatos bd = new BaseDatos("localhost", "laboratorio", "root", "");
-			Connection conexion = bd.getConexion();
-			Statement stmt = conexion.createStatement();
-			ResultSet rS = stmt.executeQuery("SELECT * FROM Asignaciones "); // para escribir cambia execute query por
-																				// executeUpdate
-			ResultSetMetaData mD = rS.getMetaData();
-			mD.getColumnCount(); // Número de columnas
-			System.out.println(mD.getColumnName(1)+"\t\t"+mD.getColumnName(2)); // nombre de la columna
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				System.out.println();
+				System.out.println("ArrayList genérico");
+				
+				ArrayList<String> listado = new ArrayList<>();
+				for (int i = 0; i < mD.getColumnCount(); i++) {
+					System.out.printf("%-27s",i + " -> " + mD.getColumnName(i+1));
+				}
+				System.out.println();
+				while (rS.next()) {
+					
+					for (int i = 1; i <mD.getColumnCount()+1; i++) {
+						
+						listado.add(rS.getString(i));
+						
+						
+						System.out.printf("%-27s", rS.getString(i));
+						
+					}System.out.println();
+					
+			
+				}
 
-			while (rS.next()) {
-				System.out.println(rS.getString(1) + "\t\t" + rS.getString(2));
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listado;
 
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
 			}
-			rS.close();
-			stmt.close();
-			conexion.close();
+			return null;
 
-		} catch (SQLException e) {
+		}
+	
+		// Ejercicio 7 Array de objeto
+		public ArrayList<Proyecto> creaListaProyectoBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
 
-			System.out.println(e.getMessage());
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				ArrayList<Proyecto> listaEquipos = new ArrayList<>();
+				Proyecto proyecto;
+				System.out.println(":: LISTA ::");
+				while (rS.next()) {
+					int id = Integer.parseInt(rS.getString(1));
+					String nombre = rS.getString("nombre");
+					int horas = Integer.parseInt(rS.getString(3));
+					
+					proyecto = new Proyecto(id, nombre, horas);
+					listaEquipos.add(proyecto);
+					System.out.println(proyecto);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaEquipos;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
 		}
 
-	}
-	
-	
+		public HashMap<String, Proyecto> creaMapaProyectoBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
+
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				HashMap<String, Proyecto> listaEquipos = new HashMap<String, Proyecto>();
+				Proyecto proyecto;
+				System.out.println(":: MAPA ::");
+				while (rS.next()) {
+					int id = Integer.parseInt(rS.getString(1));
+					String nombre = rS.getString("nombre");
+					int horas = Integer.parseInt(rS.getString(3));
+					
+					proyecto = new Proyecto(id, nombre, horas);
+					
+					listaEquipos.put(rS.getString(1), proyecto);
+					System.out.println(proyecto);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaEquipos;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
 
 }
