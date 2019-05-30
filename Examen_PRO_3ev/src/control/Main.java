@@ -32,6 +32,9 @@ public class Main {
 		ad.creaMapaProyectoBD("laboratorio", "proyectos");
 		
 		
+		System.out.println("FIN");
+		
+		
 	}
 
 }
