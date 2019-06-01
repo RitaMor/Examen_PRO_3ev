@@ -1,5 +1,8 @@
 package control;
 
+import modelo.Asignacion;
+import modelo.Cientifico;
+import modelo.Proyecto;
 import modelo.dao.AccesoDatos;
 
 public class Main {
@@ -13,12 +16,12 @@ public class Main {
 		// Ejercicio 2
 		AccesoDatos ad = new AccesoDatos();
 		
-		ad.recorreTabla();
+		ad.recorreTabla("laboratorio", "proyectos");
 		
 		// Ejercicio 3 
-		//AccesoDatos.insertaCientificosDesdeFichero("ficheros/cientificos.txt");
-		//AccesoDatos.insertaProyectosDesdeFichero("ficheros/proyectos.txt");
-		//AccesoDatos.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
+		//Cientifico.insertaCientificosDesdeFichero("ficheros/cientificos.txt");
+		//Proyecto.insertaProyectosDesdeFichero("ficheros/proyectos.txt");
+		//Asignacion.insertaAsignacionesDesdeFichero("ficheros/asignaciones.txt");
 		
 		
 		// Ejercicio 4 y 5 Hecho en sus respectivas clases
