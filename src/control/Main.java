@@ -41,7 +41,7 @@ public class Main {
 		ad.creaMapaAsignacionBD("laboratorio", "asignaciones");
 		System.out.println("FIN");
 		
-		
+		// Comentario para hacer commit
 	}
 
 }

@@ -105,42 +105,42 @@ public class AccesoDatos {
 	
 		// Ejercicio 7 Array de objeto
 		
-//		public ArrayList<Cientifico> creaListaCientificosBD(String bdatos, String tabla) {
-//			// Mostrar por consola TODOS LOS EQUIPOS...
-//			// CONECTAR A LA BBDD.
-//
-//			try {
-//				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
-//				Connection conexion = bd.getConexion();
-//				Statement stmt = conexion.createStatement();
-//				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
-//				ResultSetMetaData mD = rS.getMetaData();
-//				
-//				ArrayList<Cientifico> listaCientifico = new ArrayList<>();
-//				Cientifico cientifico;
-//				System.out.println(":: LISTA CIENTIFICO ::");
-//				while (rS.next()) {
-//					
-//					String dni = rS.getString("dni");
-//					String nombre = rS.getString("nombre");
-//					
-//					cientifico = new Cientifico(dni, nombre);
-//					listaCientifico.add(cientifico);
-//					System.out.println(cientifico);
-//				}
-//
-//				rS.close();
-//				stmt.close();
-//				conexion.close();
-//				return listaCientifico;
-//
-//			} catch (SQLException e) {
-//
-//				System.out.println(e.getMessage());
-//			}
-//			return null;
-//
-//		}
+		public ArrayList<Cientifico> creaListaCientificosBD(String bdatos, String tabla) {
+			// Mostrar por consola TODOS LOS EQUIPOS...
+			// CONECTAR A LA BBDD.
+
+			try {
+				BaseDatos bd = new BaseDatos("localhost", bdatos, "root", "");
+				Connection conexion = bd.getConexion();
+				Statement stmt = conexion.createStatement();
+				ResultSet rS = stmt.executeQuery("SELECT * FROM " + tabla + " WHERE 1 ");
+				ResultSetMetaData mD = rS.getMetaData();
+				
+				ArrayList<Cientifico> listaCientifico = new ArrayList<>();
+				Cientifico cientifico;
+				System.out.println(":: LISTA CIENTIFICO ::");
+				while (rS.next()) {
+					
+					String dni = rS.getString("dni");
+					String nombre = rS.getString("nombre");
+					
+					cientifico = new Cientifico(dni, nombre);
+					listaCientifico.add(cientifico);
+					System.out.println(cientifico);
+				}
+
+				rS.close();
+				stmt.close();
+				conexion.close();
+				return listaCientifico;
+
+			} catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+			}
+			return null;
+
+		}
 		
 		
 		
